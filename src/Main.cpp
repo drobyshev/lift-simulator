@@ -13,7 +13,7 @@ int main(int argc, char* argv[])
 
     if (const auto config = lift_simulator::ReadLiftConfig(argv[1], argv[2], argv[3], argv[4]))
     {
-        lift_simulator::Lift lift(*config);
+        lift_simulator::Lift lift(config.Get());
         lift.Run();
         return 0;
     }

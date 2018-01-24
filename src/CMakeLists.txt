@@ -16,6 +16,7 @@ set(SRC
     Lift.cpp
     StreamManager.h
     StreamManager.cpp
+    Optional.h
     Main.cpp)
 
 add_executable(${PROJECT_NAME} ${SRC})
