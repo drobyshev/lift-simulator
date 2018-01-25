@@ -103,13 +103,13 @@ void Lift::ParseCommand(const std::string& command)
 
 bool Lift::IsEmptyEventsQueue()
 {
-    const std::unique_lock<std::mutex> locker(m_eventsMutex);
+    const std::lock_guard<std::mutex> locker(m_eventsMutex);
     return m_eventsQueue.empty();
 }
 
 Lift::LiftEventPtr Lift::PopEvent()
 {
-    const std::unique_lock<std::mutex> locker(m_eventsMutex);
+    const std::lock_guard<std::mutex> locker(m_eventsMutex);
     if (m_eventsQueue.empty())
     {
         return LiftEventPtr();
@@ -121,7 +121,7 @@ Lift::LiftEventPtr Lift::PopEvent()
 
 void Lift::MakeEvents(int floorNum)
 {
-    const std::unique_lock<std::mutex> locker(m_eventsMutex);
+    const std::lock_guard<std::mutex> locker(m_eventsMutex);
     auto it = std::find_if(m_eventsQueue.begin(), m_eventsQueue.end(), [floorNum](const auto& event)
     {
         return event ? event->GetFloorNum() == floorNum : false;

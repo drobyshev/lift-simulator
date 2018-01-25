@@ -16,7 +16,7 @@ struct StreamManager
 
     void Run();
 
-    void Print(const std::string& str);
+    void Print(const std::string& msg);
 
     std::string GetLine();
 

@@ -73,7 +73,7 @@ std::string StreamManager::GetLine()
     const char BACKSPACE = 127;
     while (const char ch = getch())
     {
-        std::lock_guard<std::mutex> lock(m_mutex);
+        const std::lock_guard<std::mutex> locker(m_mutex);
         if (BACKSPACE == ch)
         {
             if (!m_inputBuf.empty())
@@ -96,16 +96,16 @@ std::string StreamManager::GetLine()
     return std::string();
 }
 
-void StreamManager::Print(const std::string& str)
+void StreamManager::Print(const std::string& msg)
 {
-    std::lock_guard<std::mutex> lock(m_mutex);
-    m_outputBuf += str;
+    const std::lock_guard<std::mutex> locker(m_mutex);
+    m_outputBuf += msg;
     Notify();
 }
 
 void StreamManager::Done()
 {
-    std::lock_guard<std::mutex> lock(m_mutex);
+    const std::lock_guard<std::mutex> locker(m_mutex);
     m_isDone = true;
     Notify();
 }
