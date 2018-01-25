@@ -6,7 +6,7 @@
 
 namespace
 {
-// stolen from the web
+// Equivalent getch from conio.h in Linux (Unix)
 char getch() {
         char buf = 0;
         struct termios old = {};
