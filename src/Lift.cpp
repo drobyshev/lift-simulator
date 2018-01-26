@@ -1,13 +1,18 @@
 #include "Lift.h"
 #include <regex>
 
+namespace
+{
+const int START_FLOOR_NUM = 1;
+}
+
 namespace lift_simulator
 {
 Lift::Lift(const LiftConfig& config)
     : m_config(config)
     , m_isDone(false)
     , m_liftIsEmpty(true)
-    , m_lastFloorNum(1)
+    , m_lastFloorNum(START_FLOOR_NUM)
     , m_liftHandler(*this)
 {}
 
