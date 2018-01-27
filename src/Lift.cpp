@@ -12,7 +12,7 @@ Lift::Lift(const LiftConfig& config)
     : m_config(config)
     , m_isDone(false)
     , m_liftIsEmpty(true)
-    , m_lastFloorNum(START_FLOOR_NUM)
+    , m_lastTargetFloorNum(START_FLOOR_NUM)
     , m_liftHandler(*this)
 {}
 
@@ -119,7 +119,7 @@ Lift::LiftEventPtr Lift::PopEvent()
     {
         return LiftEventPtr();
     }
-    const LiftEventPtr event = m_eventsQueue.front();
+    const auto event = m_eventsQueue.front();
     m_eventsQueue.pop_front();
     return event;
 }
@@ -127,7 +127,7 @@ Lift::LiftEventPtr Lift::PopEvent()
 void Lift::MakeEvents(int floorNum)
 {
     const std::lock_guard<std::mutex> locker(m_eventsMutex);
-    auto it = std::find_if(m_eventsQueue.begin(), m_eventsQueue.end(), [floorNum](const auto& event)
+    const auto it = std::find_if(m_eventsQueue.begin(), m_eventsQueue.end(), [floorNum](const auto& event)
     {
         return event ? event->GetFloorNum() == floorNum : false;
     });
@@ -143,21 +143,21 @@ void Lift::MakeEvents(int floorNum)
         return;
     }
 
-    if (m_lastFloorNum < floorNum)
+    if (m_lastTargetFloorNum < floorNum)
     {
-        for (int i = m_lastFloorNum; i < floorNum; ++i)
+        for (int i = m_lastTargetFloorNum; i < floorNum; ++i)
         {
             m_eventsQueue.push_back(std::make_shared<PassFloorEvent>(i));
         }
     }
-    else if (m_lastFloorNum > floorNum)
+    else if (m_lastTargetFloorNum > floorNum)
     {
-        for (int i = m_lastFloorNum; i > floorNum; --i)
+        for (int i = m_lastTargetFloorNum; i > floorNum; --i)
         {
             m_eventsQueue.push_back(std::make_shared<PassFloorEvent>(i));
         }
     }
-    m_lastFloorNum = floorNum;
+    m_lastTargetFloorNum = floorNum;
     m_eventsQueue.push_back(std::make_shared<TargetFloorEvent>(floorNum));
 }
 

@@ -46,7 +46,7 @@ private:
     LiftConfig               m_config;
     std::atomic<bool>        m_isDone;
     std::atomic<bool>        m_liftIsEmpty;
-    int                      m_lastFloorNum;
+    std::atomic<int>         m_lastTargetFloorNum;
     LiftHandler              m_liftHandler;
     std::thread              m_worker;
     std::mutex               m_conditionWorkerMutex;
