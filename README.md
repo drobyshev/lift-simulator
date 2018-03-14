@@ -17,7 +17,7 @@
 * `goto <n>` - нажать на кнопку этажа внутри лифта.
 
 ## Сборка и тестирование
-Протестировано на Linux Ubuntu 17.20, собрано на gcc version 7.2.0.
+Протестировано на Linux Ubuntu 17.10, собрано на gcc version 7.2.0.
 
 ## Лицензия
 Данный проект создан под лицензией MIT - подробности можно посмотреть здесь [LICENSE](https://github.com/drobyshev/lift-simulator/blob/master/LICENSE).
